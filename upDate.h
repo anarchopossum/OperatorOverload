@@ -8,24 +8,39 @@
 #include <string>
 using namespace std;
 
+
 class upDate {
 private:
     //int date[3] = {5,11,1959};
     int* dptr;
+    static int count;
 public:
+
     upDate();
     upDate(int M, int D, int Y);
     upDate(int J);
+    upDate(const upDate &date);
     ~upDate();
+
+
     void setDate(int M, int D, int Y);
     void incDate(int A);
     void decDate(int A);
+    void displayDate();
+
+
+    static int getDateCount();
     int getMonth();
     int getDay();
     int getYear();
     string getMonthName();
-    int Julian();
-};
 
+    // OverLoaded Operators
+    upDate operator+(int A);
+    upDate operator-(int A);
+    friend ostream& operator <<(ostream& os, const upDate &j);
+};
+int Greg2Julian(int M, int D, int Y);
+void Julian2Greg(int JD, int &month, int &day, int &year);
 
 #endif //OPERATOROVERLOAD_UPDATE_H
