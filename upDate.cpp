@@ -131,8 +131,6 @@ string upDate::getMonthName(){
     }
     return monthName;
 }
-
-
 void upDate::displayDate()
 {
     cout << *this << endl;
@@ -150,11 +148,29 @@ upDate upDate::operator+(int a)
     temp.incDate(a);
     return temp;
 }
+upDate operator+(int a,upDate D)
+{
+    upDate temp(D);
+    temp.incDate(a);
+    return temp;
+}
 
 upDate upDate::operator-(int a)
 {
     upDate temp(*this);
     temp.decDate(a);
+    return temp;
+}
+
+upDate operator-(int a, upDate D){
+    upDate temp(D);
+    temp.decDate(a);
+    return temp;
+}
+
+upDate upDate::operator++() {
+    upDate temp(*this);
+    temp.incDate(1);
     return temp;
 }
 

@@ -36,8 +36,15 @@ public:
     string getMonthName();
 
     // OverLoaded Operators
+    // Addition
     upDate operator+(int A);
+    friend upDate operator+(int A, upDate D);
+    upDate operator++();
+    // Subtraction
     upDate operator-(int A);
+    friend upDate operator-(int A, upDate D);
+
+
     friend ostream& operator <<(ostream& os, const upDate &j);
 };
 int Greg2Julian(int M, int D, int Y);

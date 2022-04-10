@@ -21,7 +21,10 @@ D2.displayDate();
 cout << "Day: " << D9.getDay() << " Month: " << D9.getMonth() << " Year: " << D9.getYear()<< endl;//cout << D2;
     upDate D10 = D9 - 5;
     cout << "Day: " << D10.getDay() << " Month: " << D10.getMonth() << " Year: " << D10.getYear()<< endl;//cout << D2;
-
+upDate D11 = 5 + D1;
+D11.displayDate();
+D11 = ++D11;
+D11.displayDate();
 //    std::cout << D1.getDay() << std::endl;
 //    std::cout << D1.getMonth() << std::endl;
 //    std::cout << D1.getYear() << std::endl;
