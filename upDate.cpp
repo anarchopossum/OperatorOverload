@@ -17,15 +17,18 @@ upDate::upDate() {
 
 }
 upDate::upDate(int M, int D, int Y) {
+    dptr = new int[3];
     dptr[0] = M;
     dptr[1] = D;
     dptr[2] = Y;
     if (dptr[0] <=0 || dptr[0] >=13 || dptr[1] >31 || dptr[1]<=0){
+        cout << "\n Error \n";
         dptr[0] = 5, dptr[1] = 11, dptr[2] = 1959;
-        count++;
     }
+    count++;
 }
 upDate::upDate(int A) {
+    dptr = new int[3];
     int I, J, K, L, N;
     L = A + 68569;
     N = 4 * L / 146097;
@@ -64,28 +67,16 @@ void upDate::setDate(int M, int D, int Y) {
     }
 }
 
-// Date Modifiers
-// these can add and subtract values
-void upDate::incDate(int A) {
-    int convert = Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
-    convert += A;
-    Julian2Greg(convert, dptr[0],dptr[1],dptr[2]);
-}
-void upDate::decDate(int A) {
-    int convert = Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
-    convert -= A;
-    Julian2Greg(convert, dptr[0],dptr[1],dptr[2]);
 
-}
 
 // Return Function functions
 // These will return the requested attributes
-int upDate::getDateCount(){return count;}
+int upDate::GetDateCount(){return count;}
 int upDate::getMonth() {return dptr[0];}
 int upDate::getDay()   {return dptr[1];}
 int upDate::getYear()  {return dptr[2];}
 
-
+// Display attributes
 string upDate::getMonthName(){
     string monthName;
     switch (dptr[0]) {
@@ -136,42 +127,113 @@ void upDate::displayDate()
     cout << *this << endl;
 }
 
+// Overloaded Operators
 ostream &operator<<(ostream& os, const upDate &J) {
     upDate temp(J);
     os << temp.dptr[0] <<"/"<<temp.dptr[1]<<"/"<<temp.dptr[2];
     return os;
 }
-
+// Incremental (+)
 upDate upDate::operator+(int a)
 {
-    upDate temp(*this);
-    temp.incDate(a);
+    int convert = Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
+    convert += a;
+    upDate temp(convert);
     return temp;
 }
 upDate operator+(int a,upDate D)
 {
-    upDate temp(D);
-    temp.incDate(a);
+    int convert = Greg2Julian(D.getMonth(),D.getDay(),D.getYear());
+    convert += a;
+    upDate temp(convert);
     return temp;
 }
+upDate upDate::operator++() {
+    int convert = Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
+    convert += 1;
+    upDate temp(convert);
+    return temp;
+}
+upDate upDate::operator++(int A) {
+    A = 1;
+    int convert = Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
+    convert += A;
+    upDate temp(convert);
+    return temp;
+}
+upDate& upDate::operator+=(int a) {
+    int temp =Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
+    temp += a;
+    upDate mod(temp);
+    return mod;
+};
 
+// Decremental (-)
 upDate upDate::operator-(int a)
 {
-    upDate temp(*this);
-    temp.decDate(a);
+    int convert = Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
+    convert -= a;
+    upDate temp(convert);
     return temp;
 }
-
 upDate operator-(int a, upDate D){
-    upDate temp(D);
-    temp.decDate(a);
+    int convert = Greg2Julian(D.getMonth(),D.getDay(),D.getYear());
+    convert -= a;
+    upDate temp(convert);
     return temp;
 }
-
-upDate upDate::operator++() {
-    upDate temp(*this);
-    temp.incDate(1);
+upDate upDate::operator--() {
+    int convert = Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
+    convert -= 1;
+    upDate temp(convert);
     return temp;
+}
+upDate upDate::operator--(int A) {
+    A = 1;
+    int convert = Greg2Julian(this->getMonth(),this->getDay(),this->getYear());
+    convert -= A;
+    upDate temp(convert);
+    return temp;
+}
+// Equal and others
+upDate upDate::operator=(upDate D)
+{
+    //upDate temp;
+    // Grabs the Values from D and gives the Value to the Date on the
+    // Left of the equal (AKA the Date being assigned the Values)
+    dptr[0] = D.dptr[0];
+    dptr[1] = D.dptr[1];
+    dptr[2] = D.dptr[2];
+    return *this;
+}
+bool upDate::operator==(upDate D){
+//    if(0 == this->daysBetween(D)){return true;}
+    int curDay = Greg2Julian(this->getMonth(),this->getDay(), this->getYear());
+    int Dday = Greg2Julian(D.getMonth(),D.getDay(),D.getYear());
+    if (0 == curDay - Dday){return true;}
+    return false;
+}
+bool upDate::operator<(upDate D){
+//    if(0 == this->daysBetween(D)){return true;}
+    int curDay = Greg2Julian(this->getMonth(),this->getDay(), this->getYear());
+    int Dday = Greg2Julian(D.getMonth(),D.getDay(),D.getYear());
+    if (0 == curDay < Dday){return true;}
+    return false;
+}
+bool upDate::operator>(upDate D){
+//    if(0 == this->daysBetween(D)){return true;}
+    int curDay = Greg2Julian(this->getMonth(),this->getDay(), this->getYear());
+    int Dday = Greg2Julian(D.getMonth(),D.getDay(),D.getYear());
+    if (0 == curDay > Dday){return true;}
+    return false;
+}
+int upDate::julian() {
+    int I = this->getYear();  // Year
+    int J = this->getMonth();  // Month
+    int K = this->getDay();  // Day
+    //pass day, month, year and return julian number
+    int JD = K-32075+1461*(I+4800+(J-14)/12)/4+367*(J-2-(J-14)/12*12)/12-3*((I+4900+(J-14)/12)/100)/4;
+    return JD;
 }
 
 void Julian2Greg(int JD, int &month, int &day, int &year) {
@@ -191,7 +253,6 @@ void Julian2Greg(int JD, int &month, int &day, int &year) {
     month = J;
     day = K;
 }
-
 int Greg2Julian(int m,int d,int y) {
     int I = y;  // Year
     int J = m;  // Month
@@ -199,4 +260,20 @@ int Greg2Julian(int m,int d,int y) {
     //pass day, month, year and return julian number
     int JD = K-32075+1461*(I+4800+(J-14)/12)/4+367*(J-2-(J-14)/12*12)/12-3*((I+4900+(J-14)/12)/100)/4;
     return JD;
+}
+int upDate::daysBetween(upDate D) {
+
+    int curDay = Greg2Julian(dptr[0],dptr[1],dptr[2]);
+    int Dday = Greg2Julian(D.getMonth(),D.getDay(),D.getYear());
+    cout << curDay<<endl;
+    cout << Dday <<endl;
+    int val= curDay-Dday;
+    return val;
+
+
+}
+
+int upDate::operator-(upDate D) {
+    int ans = this->daysBetween(D);
+    return ans;
 }

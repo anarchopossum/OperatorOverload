@@ -95,7 +95,7 @@ void myDate::display(){
 }
 
 // Date increments and decrements
-void myDate::addMonth() { // todo: make this compatible with dates too.
+void myDate::addMonth() {
     month++;
     if (month > 12){
         month = 1;
@@ -152,7 +152,7 @@ int myDate::dayOfYear(){
 // finds the amount of days between two dates.
 int myDate::daysBetween(myDate D) {
 
-    int curDay = Greg2Julian(month,day,year);
+    int curDay = Greg2Julian(this->month,this->day, this->year);
     int Dday = Greg2Julian(D.getMonth(),D.getDay(),D.getYear());
     int val= Dday-curDay;
     return val;

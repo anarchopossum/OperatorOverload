@@ -1,32 +1,76 @@
-#include <iostream>
+// testupDate.cpp
+// Author: Steven H Gold
+// Program #4 due date: 4/12/2022
+// 
+// 
+//
+//
+
 #include "upDate.h"
+#include <iostream>
+using namespace std;
 
-int main() {
-    upDate D1;
-    upDate D2;
-    D2.setDate(6,16,1997);
-    D2.incDate(1);
-    upDate D9 = D1 + 5;
+int main()
+{
+    upDate Bday;
+    upDate duedate(4,12,2022);
+    upDate today(duedate);
 
-//    upDate D3 = D2;
-//    upDate D4(2459665); // Mar 26 2022
-//    D1 = D2;
-cout << D1.getMonthName() <<endl;
-cout << "Day: " << D1.getDay() << " Month: " << D1.getMonth() << " Year: " << D1.getYear()<< endl;
-cout << D2.getMonthName() <<endl;
-cout << "Day: " << D2.getDay() << " Month: " << D2.getMonth() << " Year: " << D2.getYear()<< endl;
-//cout << D2.Greg2Julian()<< endl;
-cout << upDate::getDateCount()<< endl;
-D2.displayDate();
-cout << "Day: " << D9.getDay() << " Month: " << D9.getMonth() << " Year: " << D9.getYear()<< endl;//cout << D2;
-    upDate D10 = D9 - 5;
-    cout << "Day: " << D10.getDay() << " Month: " << D10.getMonth() << " Year: " << D10.getYear()<< endl;//cout << D2;
-upDate D11 = 5 + D1;
-D11.displayDate();
-D11 = ++D11;
-D11.displayDate();
-//    std::cout << D1.getDay() << std::endl;
-//    std::cout << D1.getMonth() << std::endl;
-//    std::cout << D1.getYear() << std::endl;
+
+    cout << endl;
+    cout << "Today is " << today << endl;
+    cout << "This program is due on " << duedate;
+    cout << endl;
+
+    cout << "(3)Right now there are "<<upDate::GetDateCount() << " upDate objects\n";
+    {
+        upDate d1, d2, d3;
+        cout << "(6)Inside this block there are "<<upDate::GetDateCount() << " upDate objects\n";
+    }
+    cout << "(3)Outside the block there are "<<upDate::GetDateCount() << " upDate objects\n";
+
+    upDate dtemp(duedate);
+    dtemp++;
+    cout << "If you turn this assignment in on "<<dtemp<<" then is will be late.\n"; // todo: fix upDate++ to get right ans
+    cout << "It is due on "<<--dtemp<<" so don't be late.\n";
+    cout << "One week from due date is "<<duedate+7<<endl;
+    cout << "One week from due date is "<<7+duedate<<endl;
+    cout << "One week earlier from due date is "<<duedate-7<<endl;
+
+    cout << "Your professor was born on "<<Bday<<" : ";
+    cout << "Master Gold is "<< duedate - Bday << " days old today\n";
+
+    cout << "Today is Julian date "<<duedate.julian()<<endl;;
+    cout << "Tomorrrow is Julian date "<<(++duedate).julian()<<endl;;
+
+    cout << "The very first Julian date was " << upDate(10,2,2021)-upDate(11,2,2021).julian()<<endl; // todo: fix this
+
+    cout << "The very first Julian date was " << today - today.julian()<<endl;
+    // todo: fix this
+
+ // todo: program breaks here
+    upDate yesterday, tomorrow;
+    yesterday = today-1;
+    tomorrow = today+1;
+
+    cout << "Yesterday was "<<yesterday << endl;
+    cout << "Today is "<<today<<endl;
+    cout << "Tomorrow is "<<tomorrow<<endl;
+
+    cout << "Today is ";
+    cout << ((today>tomorrow)?"greater than":"not greater than");
+    cout << " than tomorrow\n";
+
+    cout << "Today is ";
+    cout << ((today<tomorrow)?"less than":"not less than");
+    cout << " than tomorrow\n";
+
+    cout << "Today is ";
+    cout << ((today==tomorrow)?"equal to":"not equal to");
+    cout << " tomorrow\n";
+
+    //getchar();
     return 0;
-}
+}	
+
+	

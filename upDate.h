@@ -24,12 +24,10 @@ public:
 
 
     void setDate(int M, int D, int Y);
-    void incDate(int A);
-    void decDate(int A);
     void displayDate();
 
 
-    static int getDateCount();
+    static int GetDateCount();
     int getMonth();
     int getDay();
     int getYear();
@@ -40,14 +38,34 @@ public:
     upDate operator+(int A);
     friend upDate operator+(int A, upDate D);
     upDate operator++();
+    upDate operator++(int A);
+    upDate& operator+=(int a);
+
+
     // Subtraction
     upDate operator-(int A);
+    int operator-(upDate D);
     friend upDate operator-(int A, upDate D);
+    upDate operator--();
+    upDate operator--(int A);
+
+
+    // equal and other operators
+    upDate operator=(upDate D);
+    bool operator==(upDate D);
+    bool operator<(upDate D);
+    bool operator>(upDate D);
+    int daysBetween(upDate D);
+
 
 
     friend ostream& operator <<(ostream& os, const upDate &j);
+
+    int julian();
 };
 int Greg2Julian(int M, int D, int Y);
 void Julian2Greg(int JD, int &month, int &day, int &year);
 
+
 #endif //OPERATOROVERLOAD_UPDATE_H
+
