@@ -24,7 +24,7 @@ public:
 
 
     void setDate(int M, int D, int Y);
-    void displayDate();
+    void displayDate() const;
 
 
     static int GetDateCount();
@@ -38,16 +38,16 @@ public:
     upDate operator+(int A);
     friend upDate operator+(int A, upDate D);
     upDate operator++();
-    upDate operator++(int A);
+    const upDate operator++(int A);
     upDate& operator+=(int a);
 
 
     // Subtraction
     upDate operator-(int A);
-    int operator-(upDate D);
+    int operator-(const upDate& D);
     friend upDate operator-(int A, upDate D);
     upDate operator--();
-    upDate operator--(int A);
+    const upDate operator--(int A);
 
 
     // equal and other operators
